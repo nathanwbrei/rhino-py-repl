@@ -3,7 +3,7 @@ import socket
 
 port = 8000
 
-def send(text):
+def socket_send(text):
 	server=socket.socket( socket.AF_INET, socket.SOCK_STREAM )
 	server.connect( ('localhost',port) )
 	server.send(text)
@@ -11,12 +11,12 @@ def send(text):
 	server.close()
 	return data
 
-def console():
+def console(send_fn):
 	text = result = ""
 	while text != "quit()":
 		text = raw_input("Rhino >>> ")
 		if text != "":
-			result = send(text)
+			result = send_fn(text)
 		print result
 	
 def kill():
@@ -26,4 +26,4 @@ def kill():
 	server.close()
 	
 if __name__=="__main__":
-	console()
+	console(socket_send)
